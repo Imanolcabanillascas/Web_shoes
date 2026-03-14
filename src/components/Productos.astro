@@ -1,0 +1,63 @@
+---
+const productos = [
+  { id: 1, nombre: "Runner Pro X1",    precio: 189.90, imagen: "/images/shoe01.png", categoria: "Running",  tag: "Nuevo" },
+  { id: 2, nombre: "Urban Street 02",  precio: 159.90, imagen: "/images/shoe02.png", categoria: "Casual",   tag: "Popular" },
+  { id: 3, nombre: "Classic Low 03",   precio: 139.90, imagen: "/images/shoe03.png", categoria: "Clásico",  tag: "" },
+  { id: 4, nombre: "Sport Boost 04",   precio: 210.00, imagen: "/images/shoe04.png", categoria: "Deporte",  tag: "Oferta" },
+  { id: 5, nombre: "Night Walk 05",    precio: 175.00, imagen: "/images/shoe05.png", categoria: "Casual",   tag: "" },
+  { id: 6, nombre: "Elite Force 06",   precio: 229.90, imagen: "/images/shoe06.png", categoria: "Premium",  tag: "Nuevo" },
+];
+---
+
+<section id="productos" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="mb-16">
+      <p class="font-['DM_Sans'] text-xs tracking-[0.5em] uppercase text-white/30 mb-3">Lo que tenemos</p>
+      <h2 class="font-['Bebas_Neue'] text-6xl md:text-7xl text-white">Productos</h2>
+      <div class="h-px w-16 bg-white/10 mt-4"></div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {productos.map(p => (
+        <div class="group bg-white/5 border border-white/5 hover:border-white/20 transition-all duration-300 overflow-hidden flex flex-col">
+
+          <!-- Imagen -->
+          <div class="relative aspect-square bg-white/5 overflow-hidden">
+            <img
+              src={p.imagen}
+              alt={p.nombre}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            {p.tag && (
+              <span class={`absolute top-3 left-3 font-['DM_Sans'] text-xs tracking-widest uppercase px-3 py-1 ${p.tag === 'Oferta' ? 'bg-red-500' : p.tag === 'Popular' ? 'bg-blue-500' : 'bg-white text-black'}`}>
+                {p.tag}
+              </span>
+            )}
+          </div>
+
+          <!-- Info -->
+          <div class="p-5 flex flex-col flex-1 gap-3">
+            <div>
+              <p class="font-['DM_Sans'] text-xs text-white/30 uppercase tracking-widest mb-1">{p.categoria}</p>
+              <h3 class="font-['Bebas_Neue'] text-xl tracking-wide text-white">{p.nombre}</h3>
+            </div>
+            <div class="flex justify-between items-center mt-auto">
+              <span class="font-['DM_Sans'] text-lg text-white font-medium">S/ {p.precio.toFixed(2)}</span>
+              <button
+                data-product={p.id}
+                data-nombre={p.nombre}
+                data-precio={p.precio}
+                data-imagen={p.imagen}
+                class="font-['DM_Sans'] text-xs tracking-widest uppercase border border-white/30 text-white/70 px-4 py-2 hover:border-white hover:text-white transition-all duration-300"
+              >
+                + Agregar
+              </button>
+            </div>
+          </div>
+
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

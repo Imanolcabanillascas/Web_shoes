@@ -1,0 +1,71 @@
+---
+---
+<footer id="contacto" class="border-t border-white/5 py-16 px-6 bg-[#080808]">
+    <div class="max-w-5xl mx-auto">
+  
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+  
+        <!-- Marca -->
+        <div>
+          <span class="font-['Bebas_Neue'] text-3xl tracking-widest text-white">StepStore</span>
+          <p class="font-['DM_Sans'] text-sm text-white/30 mt-4 leading-relaxed">
+            Somos una tienda que cuenta con los mejores diseños de calzado.
+          </p>
+        </div>
+  
+        <!-- Enlaces -->
+        <div>
+          <p class="font-['DM_Sans'] text-xs tracking-widest uppercase text-white/30 mb-6">Enlaces</p>
+          <ul class="flex flex-col gap-3">
+            {["#inicio", "#productos", "#nosotros", "#contacto"].map((href, i) => (
+              <li>
+                <a href={href} class="font-['DM_Sans'] text-sm text-white/40 hover:text-white transition-colors duration-300">
+                  {["Inicio", "Productos", "Nosotros", "Contacto"][i]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+  
+        <!-- Contacto -->
+        <div>
+          <p class="font-['DM_Sans'] text-xs tracking-widest uppercase text-white/30 mb-6">Contacto</p>
+          <ul class="flex flex-col gap-3">
+            <li class="font-['DM_Sans'] text-sm text-white/40">📍 Lambayeque, Perú</li>
+            <li class="font-['DM_Sans'] text-sm text-white/40">📞 +51 961 329 036</li>
+            <li class="font-['DM_Sans'] text-sm text-white/40">✉️ TiendaCalzado@gmail.com</li>
+          </ul>
+          <!-- Redes -->
+          <div class="flex gap-6 mt-6">
+            <a href="#" aria-label="Facebook" class="text-white/20 hover:text-white transition-colors duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073C24 5.41 18.627 0 12 0S0 5.41 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+              </svg>
+            </a>
+            <a href="https://wa.me/51961329036" target="_blank" aria-label="WhatsApp" class="text-white/20 hover:text-white transition-colors duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0a12 12 0 00-9.44 19.2L1.5 24l5.08-1.34A11.92 11.92 0 0012 24a12 12 0 000-24zm6.6 17.2c-.28.8-1.63 1.5-2.27 1.58s-.53.5-3.14-.65c-2.65-1.16-4.32-3.73-4.45-3.9a5.5 5.5 0 01-1.17-2.55c-.12-.58.28-1.26.43-1.44s.38-.32.57-.4a.72.72 0 01.5 0l.4.06c.12 0 .3-.05.47.35.18.43.58 1.44.63 1.54s.1.25 0 .4-.16.25-.3.38c-.15.12-.3.27-.43.4s-.18.27-.08.44a8.3 8.3 0 001.53 1.97 7.28 7.28 0 002.32 1.5c.28.1.45.08.6-.05s.7-.8.9-1.08.4-.25.65-.15 1.68.8 1.97.95.48.22.55.35c.07.12.07.7-.22 1.48z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Instagram" class="text-white/20 hover:text-white transition-colors duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+  
+      </div>
+  
+      <div class="h-px w-full bg-white/5 mb-6"></div>
+      <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+        <p class="font-['DM_Sans'] text-xs text-white/20 tracking-widest uppercase">
+          © {new Date().getFullYear()} StepStore · Todos los derechos reservados
+        </p>
+        <p class="font-['DM_Sans'] text-xs text-white/10 tracking-widest uppercase">
+          Hecho por <a href="https://imanolcab.netlify.app/" target="_blank" class="text-white/20 hover:text-white transition-colors duration-300">Imadev</a>
+        </p>
+      </div>
+  
+    </div>
+  </footer>

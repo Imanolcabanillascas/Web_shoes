@@ -1,0 +1,70 @@
+---
+const links = [
+  { label: "Inicio",    href: "#inicio" },
+  { label: "Productos", href: "#productos" },
+  { label: "Nosotros",  href: "#nosotros" },
+  { label: "Contacto",  href: "#contacto" },
+];
+---
+
+<nav class="fixed top-0 w-full z-40 px-6 py-4 flex justify-between items-center backdrop-blur-md bg-black/60 border-b border-white/5">
+  <span class="font-['Bebas_Neue'] text-2xl tracking-widest text-white">StepStore</span>
+
+  <ul class="hidden md:flex gap-10 text-xs tracking-widest uppercase text-white/50">
+    {links.map(link => (
+      <li>
+        <a href={link.href} class="hover:text-white transition-colors duration-300">{link.label}</a>
+      </li>
+    ))}
+  </ul>
+
+  <button id="nav-btn" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menú">
+    <span class="block w-6 h-px bg-white transition-all duration-300" id="n1"></span>
+    <span class="block w-6 h-px bg-white transition-all duration-300" id="n2"></span>
+    <span class="block w-4 h-px bg-white transition-all duration-300" id="n3"></span>
+  </button>
+</nav>
+
+<div id="nav-menu" class="fixed top-16 left-0 w-full z-40 bg-black/95 backdrop-blur-md border-b border-white/5 flex flex-col items-center max-h-0 overflow-hidden transition-all duration-500">
+  {links.map(link => (
+    <a href={link.href} class="nav-mobile w-full text-center py-5 text-xs tracking-widest uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all duration-300 border-b border-white/5">
+      {link.label}
+    </a>
+  ))}
+</div>
+
+<script>
+  const btn = document.getElementById('nav-btn');
+  const menu = document.getElementById('nav-menu');
+  const n1 = document.getElementById('n1');
+  const n2 = document.getElementById('n2');
+  const n3 = document.getElementById('n3');
+  let open = false;
+
+  btn?.addEventListener('click', () => {
+    open = !open;
+    menu!.style.maxHeight = open ? '400px' : '0px';
+    if (open) {
+      n1!.style.transform = 'translateY(8px) rotate(45deg)';
+      n2!.style.opacity = '0';
+      n3!.style.transform = 'translateY(-8px) rotate(-45deg)';
+      n3!.style.width = '24px';
+    } else {
+      n1!.style.transform = 'none';
+      n2!.style.opacity = '1';
+      n3!.style.transform = 'none';
+      n3!.style.width = '16px';
+    }
+  });
+
+  document.querySelectorAll('.nav-mobile').forEach(link => {
+    link.addEventListener('click', () => {
+      open = false;
+      menu!.style.maxHeight = '0px';
+      n1!.style.transform = 'none';
+      n2!.style.opacity = '1';
+      n3!.style.transform = 'none';
+      n3!.style.width = '16px';
+    });
+  });
+</script>

@@ -1,11 +1,11 @@
 ---
 const productos = [
-  { id: 1, nombre: "Runner Pro X1",    precio: 189.90, imagen: "/images/shoe01.png", categoria: "Running",  tag: "Nuevo" },
-  { id: 2, nombre: "Urban Street 02",  precio: 159.90, imagen: "/images/shoe02.png", categoria: "Casual",   tag: "Popular" },
-  { id: 3, nombre: "Classic Low 03",   precio: 139.90, imagen: "/images/shoe03.png", categoria: "Clásico",  tag: "" },
-  { id: 4, nombre: "Sport Boost 04",   precio: 210.00, imagen: "/images/shoe04.png", categoria: "Deporte",  tag: "Oferta" },
-  { id: 5, nombre: "Night Walk 05",    precio: 175.00, imagen: "/images/shoe05.png", categoria: "Casual",   tag: "" },
-  { id: 6, nombre: "Elite Force 06",   precio: 229.90, imagen: "/images/shoe06.png", categoria: "Premium",  tag: "Nuevo" },
+  { id: 1, nombre: "Runner Pro X1",   precio: 189.90, imagen: "/images/shoe01.png", categoria: "Running", tag: "Nuevo" },
+  { id: 2, nombre: "Urban Street 02", precio: 159.90, imagen: "/images/shoe02.png", categoria: "Casual",  tag: "Popular" },
+  { id: 3, nombre: "Classic Low 03",  precio: 139.90, imagen: "/images/shoe03.png", categoria: "Clásico", tag: "" },
+  { id: 4, nombre: "Sport Boost 04",  precio: 210.00, imagen: "/images/shoe04.png", categoria: "Deporte", tag: "Oferta" },
+  { id: 5, nombre: "Night Walk 05",   precio: 175.00, imagen: "/images/shoe05.png", categoria: "Casual",  tag: "" },
+  { id: 6, nombre: "Elite Force 06",  precio: 229.90, imagen: "/images/shoe06.png", categoria: "Premium", tag: "Nuevo" },
 ];
 ---
 
@@ -21,22 +21,14 @@ const productos = [
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {productos.map(p => (
         <div class="group bg-white/5 border border-white/5 hover:border-white/20 transition-all duration-300 overflow-hidden flex flex-col">
-
-          <!-- Imagen -->
           <div class="relative aspect-square bg-white/5 overflow-hidden">
-            <img
-              src={p.imagen}
-              alt={p.nombre}
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
+            <img src={p.imagen} alt={p.nombre} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             {p.tag && (
               <span class={`absolute top-3 left-3 font-['DM_Sans'] text-xs tracking-widest uppercase px-3 py-1 ${p.tag === 'Oferta' ? 'bg-red-500' : p.tag === 'Popular' ? 'bg-blue-500' : 'bg-white text-black'}`}>
                 {p.tag}
               </span>
             )}
           </div>
-
-          <!-- Info -->
           <div class="p-5 flex flex-col flex-1 gap-3">
             <div>
               <p class="font-['DM_Sans'] text-xs text-white/30 uppercase tracking-widest mb-1">{p.categoria}</p>
@@ -49,15 +41,207 @@ const productos = [
                 data-nombre={p.nombre}
                 data-precio={p.precio}
                 data-imagen={p.imagen}
-                class="font-['DM_Sans'] text-xs tracking-widest uppercase border border-white/30 text-white/70 px-4 py-2 hover:border-white hover:text-white transition-all duration-300"
+                class="btn-agregar font-['DM_Sans'] text-xs tracking-widest uppercase border border-white/30 text-white/70 px-4 py-2 hover:border-white hover:text-white transition-all duration-300"
               >
                 + Agregar
               </button>
             </div>
           </div>
-
         </div>
       ))}
     </div>
   </div>
 </section>
+
+<!-- Carrito flotante -->
+<div id="cart-btn" class="fixed bottom-6 right-6 z-50 cursor-pointer">
+  <div class="relative bg-white text-black rounded-full p-4 shadow-2xl hover:scale-110 transition-transform duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z"/>
+    </svg>
+    <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold" style="display:none">0</span>
+  </div>
+</div>
+
+<!-- Panel del carrito -->
+<div id="cart-panel" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="cart-overlay"></div>
+  <div class="absolute right-0 top-0 h-full w-full max-w-md bg-[#111] flex flex-col shadow-2xl">
+
+    <div class="flex justify-between items-center p-6 border-b border-white/10">
+      <h2 class="font-['Bebas_Neue'] text-2xl tracking-widest">Tu pedido</h2>
+      <button id="cart-close" class="text-white/50 hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="cart-items" class="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
+      <p id="cart-empty" class="text-white/30 text-sm text-center mt-10 font-['DM_Sans']">
+        No hay productos seleccionados
+      </p>
+    </div>
+
+    <div class="p-6 border-t border-white/10">
+      <div class="flex justify-between items-center mb-4">
+        <span class="font-['DM_Sans'] text-white/60 text-sm uppercase tracking-widest">Total</span>
+        <span id="cart-total" class="font-['Bebas_Neue'] text-2xl text-white">S/ 0.00</span>
+      </div>
+      <button id="whatsapp-btn" class="w-full bg-green-500 hover:bg-green-400 text-white font-['DM_Sans'] text-sm tracking-widest uppercase py-4 flex items-center justify-center gap-3 transition-all duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 0a12 12 0 00-9.44 19.2L1.5 24l5.08-1.34A11.92 11.92 0 0012 24a12 12 0 000-24zm6.6 17.2c-.28.8-1.63 1.5-2.27 1.58s-.53.5-3.14-.65c-2.65-1.16-4.32-3.73-4.45-3.9a5.5 5.5 0 01-1.17-2.55c-.12-.58.28-1.26.43-1.44s.38-.32.57-.4a.72.72 0 01.5 0l.4.06c.12 0 .3-.05.47.35.18.43.58 1.44.63 1.54s.1.25 0 .4-.16.25-.3.38c-.15.12-.3.27-.43.4s-.18.27-.08.44a8.3 8.3 0 001.53 1.97 7.28 7.28 0 002.32 1.5c.28.1.45.08.6-.05s.7-.8.9-1.08.4-.25.65-.15 1.68.8 1.97.95.48.22.55.35c.07.12.07.7-.22 1.48z"/>
+        </svg>
+        Pedir por WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const WHATSAPP_NUMBER = '51961329036';
+
+  interface CartItem {
+    id: number;
+    nombre: string;
+    precio: number;
+    imagen: string;
+    cantidad: number;
+  }
+
+  let cart: CartItem[] = [];
+
+  const cartBtn     = document.getElementById('cart-btn')!;
+  const cartPanel   = document.getElementById('cart-panel')!;
+  const cartClose   = document.getElementById('cart-close')!;
+  const cartOverlay = document.getElementById('cart-overlay')!;
+  const cartItems   = document.getElementById('cart-items')!;
+  const cartCount   = document.getElementById('cart-count')!;
+  const cartTotal   = document.getElementById('cart-total')!;
+  const cartEmpty   = document.getElementById('cart-empty')!;
+  const whatsappBtn = document.getElementById('whatsapp-btn') as HTMLButtonElement;
+
+  cartBtn.addEventListener('click', () => cartPanel.classList.remove('hidden'));
+  cartClose.addEventListener('click', () => cartPanel.classList.add('hidden'));
+  cartOverlay.addEventListener('click', () => cartPanel.classList.add('hidden'));
+
+  function renderCart() {
+    Array.from(cartItems.children).forEach(child => {
+      if (child.id !== 'cart-empty') child.remove();
+    });
+
+    if (cart.length === 0) {
+      cartEmpty.classList.remove('hidden');
+      whatsappBtn.disabled = true;
+    } else {
+      cartEmpty.classList.add('hidden');
+      whatsappBtn.disabled = false;
+
+      cart.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'flex items-center gap-4 bg-white/5 p-4 rounded';
+        el.innerHTML = `
+          <img src="${item.imagen}" alt="${item.nombre}" class="w-16 h-16 object-cover rounded bg-white/10" />
+          <div class="flex-1">
+            <p class="font-sans text-sm font-medium">${item.nombre}</p>
+            <p class="font-sans text-xs text-white/40">S/ ${item.precio.toFixed(2)}</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button data-id="${item.id}" class="btn-minus w-7 h-7 rounded-full border border-white/20 text-white/60 hover:border-white hover:text-white transition-all text-sm flex items-center justify-center">−</button>
+            <span class="font-sans text-sm w-4 text-center">${item.cantidad}</span>
+            <button data-id="${item.id}" class="btn-plus w-7 h-7 rounded-full border border-white/20 text-white/60 hover:border-white hover:text-white transition-all text-sm flex items-center justify-center">+</button>
+          </div>
+          <button data-id="${item.id}" class="btn-remove text-white/20 hover:text-red-400 transition-colors ml-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        `;
+        cartItems.appendChild(el);
+      });
+    }
+
+    const total = cart.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+    cartTotal.textContent = `S/ ${total.toFixed(2)}`;
+
+    const totalItems = cart.reduce((acc, item) => acc + item.cantidad, 0);
+    if (totalItems > 0) {
+  cartCount.textContent = String(totalItems);
+  cartCount.style.display = 'flex';
+} else {
+  cartCount.style.display = 'none';
+}
+
+    cartItems.querySelectorAll('.btn-minus').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number((btn as HTMLElement).dataset.id);
+        const item = cart.find(i => i.id === id);
+        if (item) {
+          item.cantidad--;
+          if (item.cantidad <= 0) cart = cart.filter(i => i.id !== id);
+        }
+        renderCart();
+      });
+    });
+
+    cartItems.querySelectorAll('.btn-plus').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number((btn as HTMLElement).dataset.id);
+        const item = cart.find(i => i.id === id);
+        if (item) item.cantidad++;
+        renderCart();
+      });
+    });
+
+    cartItems.querySelectorAll('.btn-remove').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number((btn as HTMLElement).dataset.id);
+        cart = cart.filter(i => i.id !== id);
+        renderCart();
+      });
+    });
+  }
+
+  // Botones agregar producto
+  document.querySelectorAll('.btn-agregar').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const el = btn as HTMLElement;
+      const id     = Number(el.dataset.product);
+      const nombre = el.dataset.nombre!;
+      const precio = Number(el.dataset.precio);
+      const imagen = el.dataset.imagen!;
+
+      const existing = cart.find(i => i.id === id);
+      if (existing) {
+        existing.cantidad++;
+      } else {
+        cart.push({ id, nombre, precio, imagen, cantidad: 1 });
+      }
+
+      // Feedback visual
+      el.textContent = '✓ Agregado';
+      el.classList.add('border-white', 'text-white');
+      setTimeout(() => {
+        el.textContent = '+ Agregar';
+        el.classList.remove('border-white', 'text-white');
+      }, 1000);
+
+      renderCart();
+      cartPanel.classList.remove('hidden');
+    });
+  });
+
+  // WhatsApp
+  whatsappBtn.addEventListener('click', () => {
+    if (cart.length === 0) return;
+    let mensaje = '🛍️ *Hola! Quiero hacer el siguiente pedido:*\n\n';
+    cart.forEach(item => {
+      mensaje += `• ${item.nombre} x${item.cantidad} — S/ ${(item.precio * item.cantidad).toFixed(2)}\n`;
+    });
+    const total = cart.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+    mensaje += `\n*Total: S/ ${total.toFixed(2)}*`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, '_blank');
+  });
+
+  renderCart();
+</script>
